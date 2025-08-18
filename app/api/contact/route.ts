@@ -1,8 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { z } from "zod"
 import { Resend } from "resend"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { z } from "zod"
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -39,7 +37,7 @@ function checkRateLimit(ip: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     // Rate limiting
-    const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown"
+    const ip = request.headers.get("x-forwarded-for") || "unknown"
     if (!checkRateLimit(ip)) {
       return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 })
     }
@@ -52,6 +50,13 @@ export async function POST(request: NextRequest) {
     }
 
     const validatedData = contactSchema.parse(body)
+
+    if (!process.env.RESEND_API_KEY) {
+      console.warn("RESEND_API_KEY not configured")
+      return NextResponse.json({ error: "Email service not configured" }, { status: 500 })
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     // Send email notification
     await resend.emails.send({

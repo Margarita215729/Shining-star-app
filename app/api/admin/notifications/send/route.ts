@@ -1,10 +1,8 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { Resend } from "resend"
+import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth"
-import { authOptions } from "@/lib/auth"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { type NextRequest, NextResponse } from "next/server"
+import { Resend } from "resend"
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,6 +21,13 @@ export async function POST(request: NextRequest) {
     if (!cleaner) {
       return NextResponse.json({ error: "Cleaner not found" }, { status: 404 })
     }
+
+    if (!process.env.RESEND_API_KEY) {
+      console.warn("RESEND_API_KEY not configured")
+      return NextResponse.json({ error: "Email service not configured" }, { status: 500 })
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     await resend.emails.send({
       from: process.env.EMAIL_FROM!,

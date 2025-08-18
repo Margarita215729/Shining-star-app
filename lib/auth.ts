@@ -1,9 +1,9 @@
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import bcrypt from "bcryptjs"
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import EmailProvider from "next-auth/providers/email"
-import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./prisma"
-import bcrypt from "bcryptjs"
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -48,7 +48,7 @@ export const authOptions = {
           return {
             id: user.id,
             email: user.email,
-            name: user.name,
+            name: `${user.firstName} ${user.lastName}`,
             role: user.role || "user",
           }
         } catch (error) {
@@ -83,4 +83,9 @@ export const authOptions = {
   },
 }
 
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
+const nextAuth = NextAuth(authOptions)
+
+export const handlers = nextAuth.handlers
+export const auth = nextAuth.auth
+export const signIn = nextAuth.signIn
+export const signOut = nextAuth.signOut

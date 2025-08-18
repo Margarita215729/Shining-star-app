@@ -16,6 +16,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  transpilePackages: ['react-day-picker'],
+  output: 'standalone',
 };
 
 export default withNextIntl(nextConfig);
