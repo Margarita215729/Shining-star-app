@@ -1,0 +1,455 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+model Customer {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  email             String    @unique
+  password          String
+  firstName         String
+  lastName          String
+  phone             String?
+  role              Role      @default(CUSTOMER)
+  loyaltyPoints     Int       @default(0)
+  memberSince       DateTime  @default(now())
+  isActive          Boolean   @default(true)
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  addresses         Address[]
+  quotes            Quote[]
+  orders            Order[]
+  messages          Message[]
+  auditLogs         AuditLog[]
+
+  @@map("customers")
+}
+
+model Address {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  customerId        String    @db.ObjectId
+  street            String
+  city              String
+  state             String
+  zipCode           String
+  instructions      String?
+  isDefault         Boolean   @default(false)
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  customer          Customer  @relation(fields: [customerId], references: [id])
+  quotes            Quote[]
+  orders            Order[]
+
+  @@map("addresses")
+}
+
+model Service {
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  description       String
+  category          ServiceCategory
+  basePrice         Float
+  duration          Int              // in minutes
+  unit              String           @default("room") // room, sqft, hour, etc.
+  features          String[]
+  isActive          Boolean          @default(true)
+  isDeleted         Boolean          @default(false)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  // Relations
+  variants          ServiceVariant[]
+  quoteItems        QuoteItem[]
+  orderItems        OrderItem[]
+  pricingRules      PricingRule[]
+
+  @@map("services")
+}
+
+model ServiceVariant {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  serviceId         String    @db.ObjectId
+  name              String
+  description       String?
+  priceModifier     Float     @default(1.0) // multiplier for base price
+  durationModifier  Float     @default(1.0) // multiplier for base duration
+  isActive          Boolean   @default(true)
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  service           Service   @relation(fields: [serviceId], references: [id])
+
+  @@map("service_variants")
+}
+
+model Package {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  description       String
+  type              PackageType
+  discount          Float     @default(0) // percentage discount
+  minServices       Int       @default(1)
+  maxServices       Int?
+  isActive          Boolean   @default(true)
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  quotes            Quote[]
+  orders            Order[]
+
+  @@map("packages")
+}
+
+model Quote {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  quoteNumber       String      @unique
+  customerId        String      @db.ObjectId
+  addressId         String      @db.ObjectId
+  packageId         String?     @db.ObjectId
+  status            QuoteStatus @default(DRAFT)
+  validUntil        DateTime
+  subtotal          Float
+  discount          Float       @default(0)
+  tax               Float
+  total             Float
+  notes             String?
+  isDeleted         Boolean     @default(false)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  // Relations
+  customer          Customer    @relation(fields: [customerId], references: [id])
+  address           Address     @relation(fields: [addressId], references: [id])
+  package           Package?    @relation(fields: [packageId], references: [id])
+  items             QuoteItem[]
+  orders            Order[]
+
+  @@map("quotes")
+}
+
+model QuoteItem {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  quoteId           String    @db.ObjectId
+  serviceId         String    @db.ObjectId
+  quantity          Int       @default(1)
+  unitPrice         Float
+  total             Float
+  notes             String?
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  quote             Quote     @relation(fields: [quoteId], references: [id])
+  service           Service   @relation(fields: [serviceId], references: [id])
+
+  @@map("quote_items")
+}
+
+model Order {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  orderNumber       String      @unique
+  customerId        String      @db.ObjectId
+  addressId         String      @db.ObjectId
+  quoteId           String?     @db.ObjectId
+  packageId         String?     @db.ObjectId
+  status            OrderStatus @default(PENDING)
+  scheduledDate     DateTime
+  scheduledTime     String
+  estimatedDuration Int         // in minutes
+  actualStartTime   DateTime?
+  actualEndTime     DateTime?
+  subtotal          Float
+  discount          Float       @default(0)
+  tax               Float
+  total             Float
+  paymentStatus     PaymentStatus @default(PENDING)
+  stripePaymentId   String?
+  notes             String?
+  completionNotes   String?
+  isDeleted         Boolean     @default(false)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  // Relations
+  customer          Customer    @relation(fields: [customerId], references: [id])
+  address           Address     @relation(fields: [addressId], references: [id])
+  quote             Quote?      @relation(fields: [quoteId], references: [id])
+  package           Package?    @relation(fields: [packageId], references: [id])
+  items             OrderItem[]
+  assignments       Assignment[]
+  scheduleSlots     ScheduleSlot[]
+  messages          Message[]
+  auditLogs         AuditLog[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  orderId           String    @db.ObjectId
+  serviceId         String    @db.ObjectId
+  quantity          Int       @default(1)
+  unitPrice         Float
+  total             Float
+  notes             String?
+  isCompleted       Boolean   @default(false)
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  order             Order     @relation(fields: [orderId], references: [id])
+  service           Service   @relation(fields: [serviceId], references: [id])
+
+  @@map("order_items")
+}
+
+model ScheduleSlot {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  orderId           String?   @db.ObjectId
+  cleanerId         String?   @db.ObjectId
+  date              DateTime
+  startTime         String
+  endTime           String
+  isAvailable       Boolean   @default(true)
+  isBlocked         Boolean   @default(false)
+  blockReason       String?
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  order             Order?    @relation(fields: [orderId], references: [id])
+  cleaner           Cleaner?  @relation(fields: [cleanerId], references: [id])
+
+  @@map("schedule_slots")
+}
+
+model Assignment {
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  orderId           String           @db.ObjectId
+  cleanerId         String           @db.ObjectId
+  status            AssignmentStatus @default(ASSIGNED)
+  assignedAt        DateTime         @default(now())
+  startedAt         DateTime?
+  completedAt       DateTime?
+  notes             String?
+  rating            Int?             // 1-5
+  feedback          String?
+  isDeleted         Boolean          @default(false)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  // Relations
+  order             Order            @relation(fields: [orderId], references: [id])
+  cleaner           Cleaner          @relation(fields: [cleanerId], references: [id])
+
+  @@map("assignments")
+}
+
+model Cleaner {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  email             String    @unique
+  firstName         String
+  lastName          String
+  phone             String
+  orgId             String    @db.ObjectId
+  isActive          Boolean   @default(true)
+  skills            String[]
+  certifications    String[]
+  hourlyRate        Float?
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  org               Org              @relation(fields: [orgId], references: [id])
+  assignments       Assignment[]
+  scheduleSlots     ScheduleSlot[]
+  messages          Message[]
+
+  @@map("cleaners")
+}
+
+model Org {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  address           String
+  phone             String
+  email             String
+  isActive          Boolean   @default(true)
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  cleaners          Cleaner[]
+
+  @@map("orgs")
+}
+
+model Message {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  orderId           String?     @db.ObjectId
+  customerId        String?     @db.ObjectId
+  cleanerId         String?     @db.ObjectId
+  senderType        SenderType
+  content           String
+  isRead            Boolean     @default(false)
+  isDeleted         Boolean     @default(false)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  // Relations
+  order             Order?      @relation(fields: [orderId], references: [id])
+  customer          Customer?   @relation(fields: [customerId], references: [id])
+  cleaner           Cleaner?    @relation(fields: [cleanerId], references: [id])
+
+  @@map("messages")
+}
+
+model AuditLog {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  entityType        String    // Customer, Order, etc.
+  entityId          String    @db.ObjectId
+  action            String    // CREATE, UPDATE, DELETE
+  changes           Json?     // Store the actual changes
+  performedBy       String?   @db.ObjectId
+  performedByType   String?   // customer, cleaner, admin
+  ipAddress         String?
+  userAgent         String?
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+
+  // Relations
+  customer          Customer? @relation(fields: [performedBy], references: [id])
+  order             Order?    @relation(fields: [entityId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model PricingRule {
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  serviceId         String         @db.ObjectId
+  name              String
+  condition         Json           // Store complex conditions
+  modifier          Float          // Price multiplier or fixed amount
+  modifierType      ModifierType   @default(MULTIPLIER)
+  priority          Int            @default(0)
+  isActive          Boolean        @default(true)
+  validFrom         DateTime?
+  validUntil        DateTime?
+  isDeleted         Boolean        @default(false)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  // Relations
+  service           Service        @relation(fields: [serviceId], references: [id])
+
+  @@map("pricing_rules")
+}
+
+model Coupon {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  code              String      @unique
+  name              String
+  description       String?
+  discountType      DiscountType
+  discountValue     Float
+  minOrderAmount    Float?
+  maxDiscount       Float?
+  usageLimit        Int?
+  usedCount         Int         @default(0)
+  isActive          Boolean     @default(true)
+  validFrom         DateTime
+  validUntil        DateTime
+  isDeleted         Boolean     @default(false)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@map("coupons")
+}
+
+// Enums
+enum Role {
+  CUSTOMER
+  ADMIN
+  CLEANER
+}
+
+enum ServiceCategory {
+  RESIDENTIAL
+  COMMERCIAL
+  SPECIALIZED
+}
+
+enum PackageType {
+  BASIC
+  PREMIUM
+  DEEP_CLEAN
+}
+
+enum QuoteStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum AssignmentStatus {
+  ASSIGNED
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum SenderType {
+  CUSTOMER
+  CLEANER
+  ADMIN
+}
+
+enum ModifierType {
+  MULTIPLIER
+  FIXED_AMOUNT
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}

@@ -1,0 +1,86 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "select": "Select",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "name": "Name",
+    "message": "Message"
+  },
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "booking": "Book Now",
+    "contact": "Contact",
+    "blog": "Blog",
+    "portal": "Portal",
+    "admin": "Admin",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Professional Cleaning Services in Philadelphia",
+    "subtitle": "Trusted, reliable, and thorough cleaning for your home and business",
+    "cta": "Get Free Quote",
+    "ctaSecondary": "Learn More"
+  },
+  "services": {
+    "title": "Our Services",
+    "residential": {
+      "title": "Residential Cleaning",
+      "description": "Complete home cleaning services tailored to your needs"
+    },
+    "commercial": {
+      "title": "Commercial Cleaning",
+      "description": "Professional office and business cleaning solutions"
+    },
+    "deep": {
+      "title": "Deep Cleaning",
+      "description": "Thorough, detailed cleaning for special occasions"
+    },
+    "moveInOut": {
+      "title": "Move In/Out Cleaning",
+      "description": "Complete cleaning for moving transitions"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch for a free quote",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "service": "Service Type",
+      "message": "Message",
+      "submit": "Send Message"
+    },
+    "info": {
+      "phone": "(215) 555-0123",
+      "email": "info@shiningstarphilly.com",
+      "address": "Philadelphia, PA",
+      "hours": "Mon-Fri: 8AM-6PM, Sat: 9AM-4PM"
+    }
+  },
+  "footer": {
+    "company": "Shining Star Cleaning Services",
+    "description": "Professional cleaning services in Philadelphia and surrounding areas",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "contact": "Contact Info",
+    "followUs": "Follow Us",
+    "allRightsReserved": "All rights reserved"
+  }
+}

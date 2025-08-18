@@ -1,0 +1,86 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "retry": "Intentar de nuevo",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "continue": "Continuar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "clear": "Limpiar",
+    "select": "Seleccionar",
+    "phone": "Teléfono",
+    "email": "Correo",
+    "address": "Dirección",
+    "name": "Nombre",
+    "message": "Mensaje"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "booking": "Reservar",
+    "contact": "Contacto",
+    "blog": "Blog",
+    "portal": "Portal",
+    "admin": "Admin",
+    "language": "Idioma"
+  },
+  "hero": {
+    "title": "Servicios de Limpieza Profesional en Filadelfia",
+    "subtitle": "Limpieza confiable y completa para su hogar y negocio",
+    "cta": "Cotización Gratis",
+    "ctaSecondary": "Más Información"
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "residential": {
+      "title": "Limpieza Residencial",
+      "description": "Servicios completos de limpieza del hogar adaptados a sus necesidades"
+    },
+    "commercial": {
+      "title": "Limpieza Comercial",
+      "description": "Soluciones profesionales de limpieza para oficinas y negocios"
+    },
+    "deep": {
+      "title": "Limpieza Profunda",
+      "description": "Limpieza minuciosa y detallada para ocasiones especiales"
+    },
+    "moveInOut": {
+      "title": "Limpieza de Mudanza",
+      "description": "Limpieza completa para transiciones de mudanza"
+    }
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "Póngase en contacto para una cotización gratuita",
+    "form": {
+      "name": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "phone": "Número de Teléfono",
+      "service": "Tipo de Servicio",
+      "message": "Mensaje",
+      "submit": "Enviar Mensaje"
+    },
+    "info": {
+      "phone": "(215) 555-0123",
+      "email": "info@shiningstarphilly.com",
+      "address": "Filadelfia, PA",
+      "hours": "Lun-Vie: 8AM-6PM, Sáb: 9AM-4PM"
+    }
+  },
+  "footer": {
+    "company": "Servicios de Limpieza Shining Star",
+    "description": "Servicios profesionales de limpieza en Filadelfia y áreas circundantes",
+    "quickLinks": "Enlaces Rápidos",
+    "services": "Servicios",
+    "contact": "Información de Contacto",
+    "followUs": "Síguenos",
+    "allRightsReserved": "Todos los derechos reservados"
+  }
+}
