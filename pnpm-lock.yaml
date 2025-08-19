@@ -33,7 +33,7 @@ importers:
         specifier: ^15.1.3
         version: 15.4.6
       '@prisma/client':
-        specifier: latest
+        specifier: 6.14.0
         version: 6.14.0(prisma@6.14.0(typescript@5.9.2))(typescript@5.9.2)
       '@radix-ui/react-accordion':
         specifier: 1.2.2
