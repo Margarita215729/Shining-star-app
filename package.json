@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true npm run build",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "postbuild": "next-sitemap",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
