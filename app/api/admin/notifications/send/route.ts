@@ -53,13 +53,13 @@ export async function POST(request: NextRequest) {
         action: "notification_sent",
         entityType: "cleaner",
         entityId: cleanerId,
-        details: {
-          type,
-          jobId,
-          message,
-          method: "email",
-        },
-        userId: session.user.id,
+        // details: {
+        //   type,
+        //   jobId,
+        //   message,
+        //   method: "email",
+        // },
+        // userId: session.user.id, // Removed because 'userId' is not a valid property
       },
     })
 

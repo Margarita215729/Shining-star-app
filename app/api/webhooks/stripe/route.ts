@@ -1,7 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { headers } from "next/headers"
-import { getStripe } from "@/lib/stripe"
 import { prisma } from "@/lib/prisma"
+import { getStripe } from "@/lib/stripe"
+import { headers } from "next/headers"
+import { type NextRequest, NextResponse } from "next/server"
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
 
