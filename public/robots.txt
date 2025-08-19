@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://shining-star.app
+
+# Sitemaps
+Sitemap: https://shining-star.app/sitemap.xml

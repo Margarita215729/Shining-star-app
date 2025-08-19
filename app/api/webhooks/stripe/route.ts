@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { headers } from "next/headers"
-import { stripe } from "@/lib/stripe"
+import { getStripe } from "@/lib/stripe"
 import { prisma } from "@/lib/prisma"
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
@@ -8,8 +8,9 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text()
-    const headersList = headers()
+    const headersList = await headers()
     const signature = headersList.get("stripe-signature")!
+    const stripe = await getStripe()
 
     let event: any
 
@@ -196,6 +197,7 @@ async function handlePaymentFailure(paymentIntent: any, eventId: string) {
 
 async function handleDispute(dispute: any, eventId: string) {
   try {
+    const stripe = await getStripe()
     const charge = await stripe.charges.retrieve(dispute.charge)
     const paymentIntent = await stripe.paymentIntents.retrieve(charge.payment_intent as string)
     const { orderId } = paymentIntent.metadata

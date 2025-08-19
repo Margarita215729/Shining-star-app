@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import Stripe from "stripe"
+import { getStripe } from "@/lib/stripe"
 import { Resend } from "resend"
 
 export async function POST(request: NextRequest) {
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     // Stripe connection
     try {
       if (process.env.STRIPE_SECRET_KEY) {
-        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+        const stripe = await getStripe()
         await stripe.accounts.retrieve()
         verified.STRIPE_SECRET_KEY = true
       } else {

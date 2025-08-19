@@ -1,13 +1,20 @@
 import Stripe from "stripe"
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required environment variable: "STRIPE_SECRET_KEY"')
-}
+// Conditional Stripe initialization for build-time safety
+export const stripe = process.env.STRIPE_SECRET_KEY 
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2025-07-30.basil",
+      typescript: true,
+    })
+  : null
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2024-06-20",
-  typescript: true,
-})
+// Runtime validation function
+export const getStripe = () => {
+  if (!stripe) {
+    throw new Error('Missing required environment variable: "STRIPE_SECRET_KEY"')
+  }
+  return stripe
+}
 
 export const formatAmountForStripe = (amount: number): number => {
   return Math.round(amount * 100) // Convert to cents
