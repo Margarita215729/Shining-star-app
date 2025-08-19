@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
 
   // Apply internationalization middleware first
   const intlResponse = intlMiddleware(request)
-  
+
   // Get the session token from cookies
   const sessionToken = request.cookies.get("next-auth.session-token") ||
     request.cookies.get("__Secure-next-auth.session-token")

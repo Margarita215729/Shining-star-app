@@ -1,5 +1,5 @@
-import type React from "react"
 import type { Metadata } from "next"
+import type React from "react"
 
 export const metadata: Metadata = {
   title: "Shining Star Cleaning Services - Professional Cleaning in Philadelphia",
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   generator: "Next.js",
   keywords: [
     "cleaning services",
-    "Philadelphia", 
+    "Philadelphia",
     "residential cleaning",
     "commercial cleaning",
     "house cleaning",

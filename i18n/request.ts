@@ -3,9 +3,9 @@ import { routing } from "./routing"
 
 export default getRequestConfig(async ({ locale }) => {
   if (!routing.locales.includes(locale as any)) {
-    return { 
+    return {
       locale: "en" as const,
-      messages: {} 
+      messages: {}
     }
   }
 

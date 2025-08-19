@@ -1,14 +1,14 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter, Work_Sans } from "next/font/google"
-import { NextIntlClientProvider } from "next-intl"
-import { getMessages } from "next-intl/server"
-import { notFound } from "next/navigation"
-import { routing } from "@/i18n/routing"
 import { AuthProvider } from "@/components/auth-provider"
-import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { JsonLdSchema } from "@/components/json-ld-schema"
+import { Navigation } from "@/components/navigation"
+import { routing } from "@/i18n/routing"
+import type { Metadata } from "next"
+import { NextIntlClientProvider } from "next-intl"
+import { getMessages } from "next-intl/server"
+import { Inter, Work_Sans } from "next/font/google"
+import { notFound } from "next/navigation"
+import type React from "react"
 import "../globals.css"
 
 const inter = Inter({
@@ -46,7 +46,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  
+
   if (!routing.locales.includes(locale as any)) {
     notFound()
   }
