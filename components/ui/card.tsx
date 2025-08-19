@@ -1,24 +1,16 @@
 "use client"
 
 import * as React from "react"
-import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <motion.div
+  <div
     ref={ref}
-    className={cn("rounded-xl border bg-card text-card-foreground shadow", className)}
-    whileHover={{
-      y: -2,
-      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-    }}
-    transition={{
-      duration: 0.2,
-      ease: "easeOut",
-    }}
+    className={cn("rounded-xl border bg-card text-card-foreground shadow transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg", className)}
     {...props}
   />
 ))
+Card.displayName = "Card"
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
