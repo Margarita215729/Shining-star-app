@@ -133,6 +133,26 @@ After deployment, visit `/admin/setup` to configure your environment variables w
 3. Create API key with send permissions
 4. Use API key for both `RESEND_API_KEY` and `EMAIL_SERVER_PASSWORD`
 
+## 🚀 Quick Deployment Guide
+
+### One-Click Deploy
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Margarita215729/Shining-star-app&env=NEXT_PUBLIC_SITE_URL,MONGODB_URI,STRIPE_SECRET_KEY,STRIPE_WEBHOOK_SECRET,NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,AUTH_SECRET,RESEND_API_KEY,EMAIL_FROM,SERVICE_RADIUS_MILES,NEXT_PUBLIC_SERVICE_CENTER_LAT,NEXT_PUBLIC_SERVICE_CENTER_LON)
+
+### Manual Steps
+1. **Prepare Environment**: `cp .env.example .env.local`
+2. **Test Locally**: `npm run dev`
+3. **Check Build**: `./scripts/deploy-prep.sh`
+4. **Deploy**: Push to GitHub → Import to Vercel → Set env vars → Deploy
+
+### Essential Environment Variables
+- `MONGODB_URI` - MongoDB Atlas connection string
+- `AUTH_SECRET` - Random secret for authentication
+- `STRIPE_SECRET_KEY` - Stripe API key
+- `RESEND_API_KEY` - Email service API key
+- `NEXT_PUBLIC_SITE_URL` - Your deployed domain
+
+> 💡 **Pro Tip**: Use the setup wizard at `/admin/setup` after deployment!
+
 ## Project Structure
 
 \`\`\`

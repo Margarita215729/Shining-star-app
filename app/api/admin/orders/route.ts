@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     }
 
     const orders = await prisma.order.findMany({
-      where: { deletedAt: null },
+      where: { isDeleted: false },
       include: {
         customer: {
           select: {
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       customerName: `${order.customer.firstName} ${order.customer.lastName}`,
       customerEmail: order.customer.email,
       services: order.orderItems.map((item) => item.service.name),
-      totalAmount: order.totalAmount,
+      totalAmount: order.total,
       depositPaid: order.depositPaid,
       status: order.status,
       scheduledDate: order.scheduleSlot?.startTime?.toISOString() || null,

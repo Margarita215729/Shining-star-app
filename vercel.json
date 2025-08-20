@@ -1,5 +1,13 @@
 {
-    "buildCommand": "pnpm run build",
-    "installCommand": "pnpm install --frozen-lockfile && pnpm prisma generate",
-    "framework": "nextjs"
+    "buildCommand": "npm run build",
+    "installCommand": "npm install && npx prisma generate",
+    "framework": "nextjs",
+    "env": {
+        "PRISMA_GENERATE_DATAPROXY": "true"
+    },
+    "functions": {
+        "app/api/**/*.ts": {
+            "maxDuration": 30
+        }
+    }
 }

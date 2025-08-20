@@ -1,5 +1,5 @@
 import { prisma } from "../prisma"
-import type { PricingRule } from "@prisma/client"
+import type { PricingRule } from "../types"
 
 export interface PricingInput {
   serviceId: string
