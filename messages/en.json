@@ -29,7 +29,8 @@
     "blog": "Blog",
     "portal": "Portal",
     "admin": "Admin",
-    "language": "Language"
+    "language": "Language",
+    "portfolio": "Portfolio"
   },
   "hero": {
     "title": "Professional Cleaning Services in Philadelphia",
@@ -73,6 +74,44 @@
       "address": "Philadelphia, PA",
       "hours": "Mon-Fri: 8AM-6PM, Sat: 9AM-4PM"
     }
+  },
+  "portfolio": {
+    "title": "Our Work",
+    "subtitle": "See the amazing transformations we've achieved for our clients",
+    "viewDetails": "View Details",
+    "before": "Before",
+    "after": "After",
+    "allProjects": "All Projects",
+    "category": {
+      "kitchen": "Kitchen",
+      "bathroom": "Bathroom",
+      "office": "Office",
+      "residential": "Residential",
+      "commercial": "Commercial"
+    },
+    "noItems": "No portfolio items found",
+    "projectDate": "Project Date",
+    "tags": "Tags"
+  },
+  "packages": {
+    "title": "Service Packages",
+    "subtitle": "Save money with our bundled cleaning packages",
+    "basic": {
+      "name": "Basic Cleaning Package",
+      "description": "Essential cleaning services for small spaces"
+    },
+    "premium": {
+      "name": "Premium Cleaning Package", 
+      "description": "Comprehensive cleaning solution for homes and offices"
+    },
+    "deep": {
+      "name": "Deep Clean Package",
+      "description": "Complete deep cleaning with stain removal services"
+    },
+    "discount": "Save {percent}%",
+    "duration": "{minutes} minutes",
+    "includes": "Includes",
+    "selectPackage": "Select Package"
   },
   "footer": {
     "company": "Shining Star Cleaning Services",

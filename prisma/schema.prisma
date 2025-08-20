@@ -426,6 +426,41 @@ model Coupon {
   @@map("coupons")
 }
 
+model Portfolio {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  description       String?
+  category          String?   // kitchen, bathroom, office, etc.
+  beforeImages      String[]  // Array of image URLs
+  afterImages       String[]  // Array of image URLs
+  tags              String[]  // Array of tags for filtering
+  isPublished       Boolean   @default(true)
+  displayOrder      Int       @default(0)
+  projectDate       DateTime? // When the cleaning was done
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("portfolio")
+}
+
+model ServicePackage {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  description       String?
+  serviceIds        String[]  // Array of service IDs included
+  basePrice         Float
+  discountPercent   Float     @default(0)
+  estimatedDuration Int       // Duration in minutes
+  isActive          Boolean   @default(true)
+  displayOrder      Int       @default(0)
+  isDeleted         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("service_packages")
+}
+
 // Enums
 enum Role {
   CUSTOMER
