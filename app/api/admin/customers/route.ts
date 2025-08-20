@@ -12,11 +12,11 @@ export async function GET(request: NextRequest) {
     }
 
     const customers = await prisma.customer.findMany({
-      where: { deletedAt: null },
+      where: { isDeleted: false },
       include: {
         orders: {
           select: {
-            totalAmount: true,
+            total: true,
             status: true,
           },
         },
@@ -33,8 +33,8 @@ export async function GET(request: NextRequest) {
       email: customer.email,
       phone: customer.phone || "N/A",
       totalOrders: customer._count.orders,
-      totalSpent: customer.orders.reduce((sum, order) => sum + order.totalAmount, 0),
-      status: customer.orders.some((order) => order.status === "confirmed" || order.status === "in_progress")
+      totalSpent: customer.orders.reduce((sum, order) => sum + order.total, 0),
+      status: customer.orders.some((order) => order.status === "CONFIRMED" || order.status === "IN_PROGRESS")
         ? "active"
         : "inactive",
       createdAt: customer.createdAt.toISOString(),

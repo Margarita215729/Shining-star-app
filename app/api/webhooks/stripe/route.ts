@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (existingEvent) {
-      console.log(`Event ${eventId} already processed`)
+      // Event already processed, return success to avoid retries
       return NextResponse.json({ received: true })
     }
 
@@ -48,7 +48,8 @@ export async function POST(request: NextRequest) {
         break
 
       default:
-        console.log(`Unhandled event type: ${event.type}`)
+        // Unhandled event type - log for monitoring if needed
+        break
     }
 
     return NextResponse.json({ received: true })
@@ -133,7 +134,7 @@ async function handlePaymentSuccess(paymentIntent: any, eventId: string) {
         }
       }
 
-      console.log(`Payment successful for order ${orderId}, deposit: ${isDepositPayment}`)
+      // Payment processed successfully
     }
 
     await prisma.auditLog.create({
@@ -177,7 +178,7 @@ async function handlePaymentFailure(paymentIntent: any, eventId: string) {
         },
       })
 
-      console.log(`Payment failed for order ${orderId}`)
+      // Payment failed - order status updated
     }
 
     await prisma.auditLog.create({

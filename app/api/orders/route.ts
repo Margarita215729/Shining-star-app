@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     const orders = await prisma.order.findMany({
       where: {
         customerId: session.user.id,
-        deletedAt: null,
+        isDeleted: false,
       },
       include: {
         items: {
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     const transformedOrders = orders.map((order) => ({
       id: order.id,
       status: order.status,
-      totalAmount: order.totalAmount,
+      totalAmount: order.total,
       depositPaid: order.depositPaid,
       depositAmount: order.depositAmount,
       balanceDue: order.balanceDue,

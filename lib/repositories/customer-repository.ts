@@ -1,5 +1,5 @@
 import { prisma } from "../prisma"
-import type { Customer } from "@prisma/client"
+import type { Customer } from "../types"
 import bcrypt from "bcryptjs"
 
 export class CustomerRepository {

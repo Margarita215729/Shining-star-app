@@ -6,22 +6,9 @@ import { routing } from "@/i18n/routing"
 import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
-import { Inter, Work_Sans } from "next/font/google"
 import { notFound } from "next/navigation"
 import type React from "react"
 import "../globals.css"
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-})
-
-const workSans = Work_Sans({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-work-sans",
-})
 
 export const metadata: Metadata = {
   title: "Shining Star Cleaning Services - Professional Cleaning in Philadelphia",
@@ -54,13 +41,13 @@ export default async function RootLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className={`${inter.variable} ${workSans.variable} antialiased`}>
+    <html lang={locale} className="antialiased">
       <head>
         <JsonLdSchema />
         <style>{`
           html {
-            --font-sans: ${inter.style.fontFamily};
-            --font-heading: ${workSans.style.fontFamily};
+            --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-heading: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           }
         `}</style>
       </head>

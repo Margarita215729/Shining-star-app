@@ -1,5 +1,5 @@
 import { prisma } from "../prisma"
-import type { Order, OrderStatus } from "@prisma/client"
+import type { Order, OrderStatus } from "../types"
 
 export class OrderRepository {
   async create(data: Omit<Order, "id" | "createdAt" | "updatedAt" | "orderNumber">) {

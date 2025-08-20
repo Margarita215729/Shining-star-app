@@ -27,8 +27,8 @@ export default function ProfilePage() {
   })
 
   const handleSave = () => {
-    // Handle profile update
-    console.log("Profile updated:", profile)
+    // TODO: Implement profile update API call
+    // For now, just show success message
   }
 
   return (

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://shining-star.app
+Host: http://localhost:3000
 
 # Sitemaps
-Sitemap: https://shining-star.app/sitemap.xml
+Sitemap: http://localhost:3000/sitemap.xml
