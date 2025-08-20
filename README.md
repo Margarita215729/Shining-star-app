@@ -17,6 +17,9 @@ A production-grade Next.js application for professional cleaning services in Phi
 - 📊 **Admin Dashboard**: Comprehensive management with scheduler and notifications
 - 💬 **Real-time Chat**: Customer support with Server-Sent Events
 - 🌐 **SEO Optimized**: JSON-LD schema, sitemap, and OpenGraph images
+- 📸 **Portfolio Management**: Before/after galleries with admin upload interface
+- 📦 **Service Packages**: Bundled services with automatic discounts
+- 🧹 **Service Catalog**: Detailed cleaning services with pricing calculator
 
 ## Tech Stack
 
@@ -204,6 +207,20 @@ The included GitHub Actions workflow:
 - Deploys to Vercel on main branch
 
 ## Troubleshooting
+
+### Portfolio and Service Packages
+
+**Portfolio Management**
+- Admin can upload before/after photos through `/admin/portfolio`
+- Portfolio items support categories, tags, and project dates
+- Public portfolio view at `/portfolio` with filtering
+- Images should be optimized for web (max 2MB recommended)
+
+**Service Packages**
+- Pre-configured service bundles with automatic discounts
+- Managed through the admin interface
+- Automatically calculated pricing based on included services
+- Can be used in the booking flow alongside individual services
 
 ### Common Issues
 
